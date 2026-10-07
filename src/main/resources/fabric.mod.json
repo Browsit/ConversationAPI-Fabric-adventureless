@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "conversation-fabric",
+  "version": "${version}",
+  "name": "Conversation API-Fabric",
+  "description": "",
+  "authors": ["Browsit"],
+  "contact": {
+    "homepage": "https://github.com/Browsit/ConversationAPI-Fabric/",
+    "sources": "https://github.com/Browsit/ConversationAPI-Fabric/"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "org.browsit.conversations.fabric.FabricConversationsMod"
+    ]
+  },
+  "mixins": [
+    "conversation.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.2",
+    "adventure-platform-fabric": ">=${adventure_platform_version}",
+    "minecraft": ">=26.2",
+    "java": ">=25"
+  }
+}

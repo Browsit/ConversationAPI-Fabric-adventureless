@@ -1,0 +1,7 @@
+jdk:
+  - openjdk25
+before_install:
+  - curl -fsSL -o $HOME/gradle-9.5.1-bin.zip https://services.gradle.org/distributions/gradle-9.5.1-bin.zip
+  - unzip -q -o $HOME/gradle-9.5.1-bin.zip -d $HOME
+install:
+  - $HOME/gradle-9.5.1/bin/gradle clean -Pgroup=$GROUP -Pversion=$VERSION -xtest assemble publishToMavenLocal --console=plain --info
