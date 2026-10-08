@@ -1,7 +1,7 @@
 # Conversation API for Fabric without Adventure
-A compact API for conversations on Fabric servers, built with [Kyori's Adventure](https://github.com/KyoriPowered/adventure). Requires Java 25 or newer.
+A compact API for conversations on Fabric servers. Requires Java 25 or newer.
 
-For conversations on Bukkit and Paper servers, see https://github.com/Browsit/ConversationAPI
+For conversations on Bukkit and Paper servers, see https://github.com/Browsit/ConversationAPI-adventureless
 
 ## Depend
 ```xml

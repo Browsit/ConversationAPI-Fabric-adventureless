@@ -1,9 +1,11 @@
 package org.browsit.conversations.fabric;
 
-import org.browsit.conversations.api.Conversations;
-import org.browsit.conversations.impl.provider.AdventureConversationsProvider;
-import net.kyori.adventure.platform.modcommon.MinecraftServerAudiences;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import org.browsit.conversations.api.Conversations;
+import org.browsit.conversations.fabric.util.LegacyTextComponent;
+import org.browsit.conversations.impl.audience.ConversationAudienceImpl;
+import org.browsit.conversations.impl.provider.ConversationsProviderImpl;
 
 /**
  * @author Illusion
@@ -21,7 +23,12 @@ public class FabricConversations {
     public static void init(MinecraftServer server) {
         if (initialized) throw new IllegalStateException("Conversations(Fabric) API already initialized");
 
-        Conversations.init(AdventureConversationsProvider.create(MinecraftServerAudiences.of(server)));
+        Conversations.init(ConversationsProviderImpl.create(uuid -> new ConversationAudienceImpl(uuid, message -> {
+            ServerPlayer player = server.getPlayerList().getPlayer(uuid);
+            if (player != null) {
+                player.sendSystemMessage(LegacyTextComponent.from(message));
+            }
+        })));
         initialized = true;
     }
 

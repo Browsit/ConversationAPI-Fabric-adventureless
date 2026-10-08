@@ -19,11 +19,8 @@ configurations.all {
 }
 
 configurations {
-    // Fabric API itself is never shipped and never declared in fabric.mod.json or the published
-    // POM (generated off runtimeElements). It is only needed (a) to compile, because
-    // adventure-platform-fabric's class signatures reference fabric-api types, and (b) for dev
-    // runs. Note that the bundled adventure-platform-fabric mod hard-depends at runtime on
-    // fabric-api-base / fabric-command-api-v2, so Fabric API must be installed alongside.
+    // Fabric API is never shipped and never declared in fabric.mod.json or the published
+    // POM (generated off runtimeElements). It is only needed for dev runs.
     fabricApiDevOnly
     runtimeClasspath {
         extendsFrom fabricApiDevOnly
@@ -38,40 +35,19 @@ dependencies {
     compileOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     fabricApiDevOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation("net.kyori:adventure-platform-fabric:${project.adventure_platform_version}") {
-        exclude group: "net.fabricmc.fabric-api"
-    }
-    implementation "net.kyori:adventure-text-serializer-legacy:${project.adventure_version}"
-
-    implementation("com.github.Browsit.ConversationAPI:api:${project.conversation_version}") {
+    implementation("com.github.Browsit.ConversationAPI-adventureless:api:${project.conversation_version}") {
         changing = true
-        exclude group: "net.kyori", module: "adventure-platform-api"
-        exclude group: "net.kyori", module: "adventure-api"
     }
-    implementation("com.github.Browsit.ConversationAPI:impl:${project.conversation_version}") {
+    implementation("com.github.Browsit.ConversationAPI-adventureless:impl:${project.conversation_version}") {
         changing = true
-        exclude group: "net.kyori", module: "adventure-platform-api"
-        exclude group: "net.kyori", module: "adventure-api"
-        exclude group: "net.kyori", module: "adventure-text-serializer-legacy"
     }
 
-    include("com.github.Browsit.ConversationAPI:api:${project.conversation_version}") {
+    include("com.github.Browsit.ConversationAPI-adventureless:api:${project.conversation_version}") {
         changing = true
         transitive = false
-        exclude group: "net.kyori", module: "adventure-platform-api"
-        exclude group: "net.kyori", module: "adventure-api"
     }
-    include("com.github.Browsit.ConversationAPI:impl:${project.conversation_version}") {
+    include("com.github.Browsit.ConversationAPI-adventureless:impl:${project.conversation_version}") {
         changing = true
-        transitive = false
-        exclude group: "net.kyori", module: "adventure-platform-api"
-        exclude group: "net.kyori", module: "adventure-api"
-        exclude group: "net.kyori", module: "adventure-text-serializer-legacy"
-    }
-    include("net.kyori:adventure-text-serializer-legacy:${project.adventure_version}") {
-        transitive = false
-    }
-    include("net.kyori:adventure-platform-fabric:${project.adventure_platform_version}") {
         transitive = false
     }
 
@@ -83,7 +59,7 @@ processResources {
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version, "adventure_platform_version": project.adventure_platform_version
+        expand "version": project.version
     }
 }
 
